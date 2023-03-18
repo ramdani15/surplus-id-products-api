@@ -16,6 +16,7 @@ class CategoryController extends Controller
      *       summary="Get list categories ",
      *       description="Endpoint to get list categories ",
      *       tags={"Categories"},
+     *
      *       @OA\Parameter(
      *           name="id",
      *           in="query",

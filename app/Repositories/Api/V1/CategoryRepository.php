@@ -17,8 +17,6 @@ class CategoryRepository extends BaseRepository
 
     /**
      * Get Datatables Categories
-     * 
-     * @param \Illuminate\Http\Request $request
      */
     public function datatable(Request $request)
     {

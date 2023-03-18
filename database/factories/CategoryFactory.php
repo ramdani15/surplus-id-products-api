@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'enable' => $this->faker->boolean()
+            'enable' => $this->faker->boolean(),
         ];
     }
 }

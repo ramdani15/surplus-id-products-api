@@ -20,11 +20,12 @@ class ImageFactory extends Factory
         $dir = 'images';
         $filepath = public_path('/storage//'.$dir);
 
-        if(!File::exists($filepath)){
+        if (! File::exists($filepath)) {
             File::makeDirectory($filepath);
         }
-        
+
         $file = $this->faker->image($filepath, 400, 400, null, false);
+
         return [
             'name' => $file,
             'file' => $dir.'/'.$file,
