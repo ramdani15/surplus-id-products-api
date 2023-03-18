@@ -1,0 +1,107 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Surplus Indonesia API Core V1 Swagger Documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get list categories ",
+                "description": "Endpoint to get list categories ",
+                "operationId": "e225c2b7eb5daf7fb16e00f4f07ff030",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name"
+                    },
+                    {
+                        "name": "enable",
+                        "in": "query",
+                        "description": "Enable (1 / 0)"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "1 for Ascending -1 for Descending"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Field to sort"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit (Default 10)"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Num Of Page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get list categories successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        },
+                                        "pagination": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Get list categories failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Get list categories failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "token": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
