@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends BaseModel
 {
@@ -30,5 +31,13 @@ class Category extends BaseModel
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, CategoryProduct::getTableName());
+    }
+
+    /**
+     * Relation to category products
+     */
+    public function categoryProducts(): HasMany
+    {
+        return $this->hasMany(CategoryProduct::class, 'category_id');
     }
 }

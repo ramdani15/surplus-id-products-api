@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Image extends BaseModel
 {
@@ -31,6 +32,14 @@ class Image extends BaseModel
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, ProductImage::getTableName());
+    }
+
+    /**
+     * Relation to product images
+     */
+    public function productImages(): HasMany
+    {
+        return $this->hasMany(ProductImage::class, 'image_id');
     }
 
     /**

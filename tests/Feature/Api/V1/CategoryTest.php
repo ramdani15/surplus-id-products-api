@@ -76,7 +76,7 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * Test API V1 create categories success
+     * Test API V1 create categories failed
      *
      * @return void
      */
@@ -116,7 +116,7 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * Test API V1 update categories success
+     * Test API V1 update categories failed
      *
      * @return void
      */
