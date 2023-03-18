@@ -32,4 +32,12 @@ class Image extends BaseModel
     {
         return $this->belongsToMany(Product::class, ProductImage::getTableName());
     }
+
+    /**
+     * Get Full Url
+     */
+    public function getFullUrlAttribute(): string
+    {
+        return asset($this->file);
+    }
 }

@@ -12,11 +12,16 @@ RUN apt-get update && apt-get install -y \
     ntp \
     gnupg \
     nodejs npm \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
     libzip-dev \
     zlib1g-dev && \
     pecl install mongodb && docker-php-ext-enable mongodb && \
     pecl install xdebug && docker-php-ext-enable xdebug && \
-    docker-php-ext-install -j$(nproc) zip
+    docker-php-ext-install -j$(nproc) zip && \
+    docker-php-ext-configure gd --with-freetype --with-jpeg && \
+    docker-php-ext-install -j$(nproc) gd
 
 
 # Install Composer

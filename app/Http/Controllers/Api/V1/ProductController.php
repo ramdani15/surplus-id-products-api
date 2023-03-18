@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Cores\ApiResponse;
-use App\Http\Requests\Api\V1\Category\CreateRequest;
-use App\Http\Requests\Api\V1\Category\UpdateRequest;
-use Facades\App\Repositories\Api\V1\CategoryRepository;
+use App\Http\Requests\Api\V1\Product\CreateRequest;
+use App\Http\Requests\Api\V1\Product\UpdateRequest;
+use Facades\App\Repositories\Api\V1\ProductRepository;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     use ApiResponse;
 
     /**
      * @OA\Get(
-     *       path="/api/v1/categories",
-     *       summary="Get list categories ",
-     *       description="Endpoint to get list categories ",
-     *       tags={"Categories"},
+     *       path="/api/v1/products",
+     *       summary="Get list products ",
+     *       description="Endpoint to get list products ",
+     *       tags={"Products"},
      *
      *       @OA\Parameter(
      *           name="id",
@@ -28,6 +28,11 @@ class CategoryController extends Controller
      *           name="name",
      *           in="query",
      *           description="Name"
+     *       ),
+     *       @OA\Parameter(
+     *           name="description",
+     *           in="query",
+     *           description="Description"
      *       ),
      *       @OA\Parameter(
      *           name="enable",
@@ -57,7 +62,7 @@ class CategoryController extends Controller
      *
      *       @OA\Response(
      *          response=200,
-     *          description="Get list categories successfully",
+     *          description="Get list products successfully",
      *
      *          @OA\JsonContent(
      *
@@ -68,26 +73,26 @@ class CategoryController extends Controller
      *
      *      @OA\Response(
      *          response=400,
-     *          description="Get list categories failed",
+     *          description="Get list products failed",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="status", type="boolean", example=false),
-     *              @OA\Property(property="message", type="string", example="Get list categories failed"),
+     *              @OA\Property(property="message", type="string", example="Get list products failed"),
      *          )
      *      ),
      * )
      */
     public function index(Request $request)
     {
-        $data = CategoryRepository::datatable($request);
+        $data = ProductRepository::datatable($request);
         if (isset($data['status']) && ! $data['status']) {
             return $this->responseJson('error', $data['message'], $data['data']);
         }
 
         return $this->responseJson(
             'pagination',
-            __('Get list categories successfully'),
+            __('Get list products successfully'),
             $data,
             200,
             [$request->sort_by, $request->sort]
@@ -96,42 +101,48 @@ class CategoryController extends Controller
 
     /**
      * @OA\Post(
-     *      path="/api/v1/categories",
-     *      summary="Create category",
-     *      description="Endpoint to handle create category",
-     *      tags={"Categories"},
+     *      path="/api/v1/products",
+     *      summary="Create product",
+     *      description="Endpoint to handle create product",
+     *      tags={"Products"},
      *
-     *      @OA\RequestBody(
-     *          required=true,
+     *       @OA\RequestBody(
      *
-     *          @OA\JsonContent(
-     *              required={"name", "enable"},
+     *           @OA\MediaType(
+     *               mediaType="multipart/form-data",
      *
-     *              @OA\Property(property="name", type="string", example="new category"),
-     *              @OA\Property(property="enable", type="boolean", example=1),
-     *          ),
-     *      ),
+     *               @OA\Schema(
+     *                   required={"name", "description", "enable", "image", "category_id"},
+     *
+     *                   @OA\Property(property="name", type="string", description="Name", example="new product"),
+     *                   @OA\Property(property="description", type="string", description="Description", example="description"),
+     *                   @OA\Property(property="enable", type="number", description="Enable (1 / 0)", example=1),
+     *                   @OA\Property(property="image", type="file", description="Image"),
+     *                   @OA\Property(property="category_id", type="number", description="Category ID", example=1),
+     *               )
+     *           )
+     *       ),
      *
      *      @OA\Response(
      *          response=201,
-     *          description="Create category successfully",
+     *          description="Create product successfully",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="status", type="boolean", example=true),
-     *              @OA\Property(property="message", type="string", example="Create category successfully"),
+     *              @OA\Property(property="message", type="string", example="Create product successfully"),
      *              @OA\Property(property="data", type="object", example={}),
      *          )
      *      ),
      *
      *      @OA\Response(
      *          response=400,
-     *          description="Create category failed",
+     *          description="Create product failed",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="status", type="boolean", example=false),
-     *              @OA\Property(property="message", type="string", example="Create category failed"),
+     *              @OA\Property(property="message", type="string", example="Create product failed"),
      *          )
      *      ),
      * )
@@ -139,7 +150,7 @@ class CategoryController extends Controller
     public function store(CreateRequest $request)
     {
         $data = $request->validated();
-        $response = CategoryRepository::create($data);
+        $response = ProductRepository::create($data);
 
         return $this->responseJson(
             $response['status'] ? 'success' : 'error',
@@ -151,10 +162,10 @@ class CategoryController extends Controller
 
     /**
      * @OA\Get(
-     *       path="/api/v1/categories/{id}",
-     *       summary="Get detail category ",
-     *       description="Endpoint to get detail category ",
-     *       tags={"Categories"},
+     *       path="/api/v1/products/{id}",
+     *       summary="Get detail product ",
+     *       description="Endpoint to get detail product ",
+     *       tags={"Products"},
      *
      *      @OA\Parameter(
      *          required=true,
@@ -165,31 +176,31 @@ class CategoryController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Get category successfully",
+     *          description="Get product successfully",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="status", type="boolean", example=true),
-     *              @OA\Property(property="message", type="string", example="Get Category successfully"),
+     *              @OA\Property(property="message", type="string", example="Get Product successfully"),
      *              @OA\Property(property="data", type="object", example={}),
      *          )
      *      ),
      *
      *      @OA\Response(
      *          response=404,
-     *          description="Category not found",
+     *          description="Product not found",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="status", type="boolean", example=false),
-     *              @OA\Property(property="message", type="string", example="Category not found"),
+     *              @OA\Property(property="message", type="string", example="Product not found"),
      *          )
      *      ),
      * )
      */
     public function show($id)
     {
-        $response = CategoryRepository::find($id);
+        $response = ProductRepository::find($id);
 
         return $this->responseJson(
             $response['status'] ? 'success' : 'error',
@@ -199,12 +210,13 @@ class CategoryController extends Controller
         );
     }
 
+    // NOTE : only can POST method for form data
     /**
-     * @OA\Put(
-     *       path="/api/v1/categories/{id}",
-     *       summary="Update category ",
-     *       description="Endpoint to update category ",
-     *       tags={"Categories"},
+     * @OA\Post(
+     *       path="/api/v1/products/{id}",
+     *       summary="Update product ",
+     *       description="Endpoint to update product ",
+     *       tags={"Products"},
      *
      *      @OA\Parameter(
      *          required=true,
@@ -213,37 +225,43 @@ class CategoryController extends Controller
      *          description="ID"
      *      ),
      *
-     *      @OA\RequestBody(
-     *          required=true,
+     *       @OA\RequestBody(
      *
-     *          @OA\JsonContent(
-     *              required={"name", "enable"},
+     *           @OA\MediaType(
+     *               mediaType="multipart/form-data",
      *
-     *              @OA\Property(property="name", type="string", example="new category"),
-     *              @OA\Property(property="enable", type="boolean", example=1),
-     *          ),
-     *      ),
+     *               @OA\Schema(
+     *                   required={"name", "description", "enable"},
+     *
+     *                   @OA\Property(property="name", type="string", description="Name", example="new product"),
+     *                   @OA\Property(property="description", type="string", description="Description", example="description"),
+     *                   @OA\Property(property="enable", type="number", description="Enable (1 / 0)", example=1),
+     *                   @OA\Property(property="image", type="file", description="Image (only for Replace)"),
+     *                   @OA\Property(property="category_id", type="number", description="Category ID (only for Replace)"),
+     *               )
+     *           )
+     *       ),
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Update category successfully",
+     *          description="Update product successfully",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="status", type="boolean", example=true),
-     *              @OA\Property(property="message", type="string", example="Update Category successfully"),
+     *              @OA\Property(property="message", type="string", example="Update Product successfully"),
      *              @OA\Property(property="data", type="object", example={}),
      *          )
      *      ),
      *
      *      @OA\Response(
      *          response=400,
-     *          description="Update category failed",
+     *          description="Update product failed",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="status", type="boolean", example=false),
-     *              @OA\Property(property="message", type="string", example="Update category failed"),
+     *              @OA\Property(property="message", type="string", example="Update product failed"),
      *          )
      *      ),
      * )
@@ -251,7 +269,7 @@ class CategoryController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $data = $request->validated();
-        $response = CategoryRepository::update($id, $data);
+        $response = ProductRepository::update($id, $data);
 
         return $this->responseJson(
             $response['status'] ? 'success' : 'error',
@@ -263,10 +281,10 @@ class CategoryController extends Controller
 
     /**
      * @OA\Delete(
-     *       path="/api/v1/categories/{id}",
-     *       summary="Delete category ",
-     *       description="Endpoint to delete category ",
-     *       tags={"Categories"},
+     *       path="/api/v1/products/{id}",
+     *       summary="Delete product ",
+     *       description="Endpoint to delete product ",
+     *       tags={"Products"},
      *
      *      @OA\Parameter(
      *          required=true,
@@ -277,31 +295,31 @@ class CategoryController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Delete category successfully",
+     *          description="Delete product successfully",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="status", type="boolean", example=true),
-     *              @OA\Property(property="message", type="string", example="Delete Category successfully"),
+     *              @OA\Property(property="message", type="string", example="Delete Product successfully"),
      *              @OA\Property(property="data", type="object", example={}),
      *          )
      *      ),
      *
      *      @OA\Response(
      *          response=400,
-     *          description="Delete category failed",
+     *          description="Delete product failed",
      *
      *          @OA\JsonContent(
      *
      *              @OA\Property(property="status", type="boolean", example=false),
-     *              @OA\Property(property="message", type="string", example="Delete category failed"),
+     *              @OA\Property(property="message", type="string", example="Delete product failed"),
      *          )
      *      ),
      * )
      */
     public function destroy($id)
     {
-        $response = CategoryRepository::delete($id);
+        $response = ProductRepository::delete($id);
 
         return $this->responseJson(
             $response['status'] ? 'success' : 'error',

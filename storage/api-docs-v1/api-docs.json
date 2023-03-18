@@ -22,7 +22,7 @@
                     {
                         "name": "name",
                         "in": "query",
-                        "description": "name"
+                        "description": "Name"
                     },
                     {
                         "name": "enable",
@@ -374,6 +374,423 @@
                                         "message": {
                                             "type": "string",
                                             "example": "Delete category failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get list products ",
+                "description": "Endpoint to get list products ",
+                "operationId": "1ce27f90dd8c39cea9520bf45d58c7c2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "Description"
+                    },
+                    {
+                        "name": "enable",
+                        "in": "query",
+                        "description": "Enable (1 / 0)"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "1 for Ascending -1 for Descending"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Field to sort"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit (Default 10)"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Num Of Page"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get list products successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        },
+                                        "pagination": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Get list products failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Get list products failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create product",
+                "description": "Endpoint to handle create product",
+                "operationId": "acaa0d3fdc74fd4b534e70fc016cf7f1",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description",
+                                    "enable",
+                                    "image",
+                                    "category_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Name",
+                                        "type": "string",
+                                        "example": "new product"
+                                    },
+                                    "description": {
+                                        "description": "Description",
+                                        "type": "string",
+                                        "example": "description"
+                                    },
+                                    "enable": {
+                                        "description": "Enable (1 / 0)",
+                                        "type": "number",
+                                        "example": 1
+                                    },
+                                    "image": {
+                                        "description": "Image",
+                                        "type": "file"
+                                    },
+                                    "category_id": {
+                                        "description": "Category ID",
+                                        "type": "number",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Create product successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create product successfully"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Create product failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Create product failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get detail product ",
+                "description": "Endpoint to get detail product ",
+                "operationId": "249e765b6489191fb8167474db8867f7",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get product successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Get Product successfully"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Product not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Product not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update product ",
+                "description": "Endpoint to update product ",
+                "operationId": "28e5087618b9b042d3e04e3f62db2d0f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description",
+                                    "enable"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Name",
+                                        "type": "string",
+                                        "example": "new product"
+                                    },
+                                    "description": {
+                                        "description": "Description",
+                                        "type": "string",
+                                        "example": "description"
+                                    },
+                                    "enable": {
+                                        "description": "Enable (1 / 0)",
+                                        "type": "number",
+                                        "example": 1
+                                    },
+                                    "image": {
+                                        "description": "Image (only for Replace)",
+                                        "type": "file"
+                                    },
+                                    "category_id": {
+                                        "description": "Category ID (only for Replace)",
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Update product successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Update Product successfully"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Update product failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Update product failed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Delete product ",
+                "description": "Endpoint to delete product ",
+                "operationId": "cc01048629edd9759ba1d7ffc989f667",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delete product successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Delete Product successfully"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": []
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Delete product failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Delete product failed"
                                         }
                                     },
                                     "type": "object"
